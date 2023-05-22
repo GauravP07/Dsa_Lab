@@ -1,0 +1,18 @@
+create(n:Person{name:"gaurav"})
+
+relationship
+
+match(j:Person{name:"gaurav:})
+match(k:Product{name:"appple"})
+merge (j)-[:eats]->(k)
+
+delete
+
+match(j:person{name:"gaurav"})
+delete j
+
+update
+match(j:person{name:"gaurav"})
+set j.name="john" 
+
+subham.kumar@walchandsangli.ac.in
