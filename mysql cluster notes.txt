@@ -1,0 +1,352 @@
+MySQL Shell 8.0.30
+
+Copyright (c) 2016, 2022, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > dba.deploySandboxInstance(3310);
+A new MySQL sandbox instance will be created on this host in
+C:\Users\sudes\MySQL\mysql-sandboxes\3310
+
+Warning: Sandbox instances are only suitable for deploying and
+running on your local machine for testing purposes and are not
+accessible from external networks.
+
+Please enter a MySQL root password for the new instance: **********
+
+Deploying new MySQL instance...
+
+Instance localhost:3310 successfully deployed and started.
+Use shell.connect('root@localhost:3310') to connect to the instance.
+
+ MySQL  JS > dba.deploySandboxInstance(3320);
+A new MySQL sandbox instance will be created on this host in
+C:\Users\sudes\MySQL\mysql-sandboxes\3320
+
+Warning: Sandbox instances are only suitable for deploying and
+running on your local machine for testing purposes and are not
+accessible from external networks.
+
+Please enter a MySQL root password for the new instance: **********
+
+Deploying new MySQL instance...
+
+Instance localhost:3320 successfully deployed and started.
+Use shell.connect('root@localhost:3320') to connect to the instance.
+
+ MySQL  JS > dba.deploySandboxInstance(3330);
+A new MySQL sandbox instance will be created on this host in
+C:\Users\sudes\MySQL\mysql-sandboxes\3330
+
+Warning: Sandbox instances are only suitable for deploying and
+running on your local machine for testing purposes and are not
+accessible from external networks.
+
+Please enter a MySQL root password for the new instance: **********
+
+Deploying new MySQL instance...
+
+Instance localhost:3330 successfully deployed and started.
+Use shell.connect('root@localhost:3330') to connect to the instance.
+
+ MySQL  JS > var cluster=dba.createCluster('mycluster');
+Dba.createCluster: The shell must be connected to a member of the InnoDB cluster being managed (LogicError)
+ MySQL  JS > \connect root@localhost:3310
+Creating a session to 'root@localhost:3310'
+Please provide the password for 'root@localhost:3310': **********
+Save password for 'root@localhost:3310'? [Y]es/[N]o/Ne[v]er (default No): Y
+Fetching schema names for autocompletion... Press ^C to stop.
+Your MySQL connection id is 13
+Server version: 8.0.30 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3310 ssl  JS > var cluster=dba.createCluster('Mysql Cluster');
+A new InnoDB Cluster will be created on instance '127.0.0.1:3310'.
+
+Dba.createCluster: Cluster name may only contain alphanumeric characters, '_', '-', or '.' and may not start with a number (Mysql Cluster) (ArgumentError)
+ MySQL  localhost:3310 ssl  JS > delete cluster 'Mysql Cluster';
+SyntaxError: Unexpected string
+ MySQL  localhost:3310 ssl  JS > delete cluster [--removedirs] 'Mysql Cluster';
+SyntaxError: Unexpected string
+ MySQL  localhost:3310 ssl  JS > delete cluster [--removedirs] Mysql Cluster;
+SyntaxError: Unexpected identifier
+ MySQL  localhost:3310 ssl  JS > var cluster = dba.createCluster('devCluster');
+A new InnoDB Cluster will be created on instance '127.0.0.1:3310'.
+
+Validating instance configuration at localhost:3310...
+NOTE: Instance detected as a sandbox.
+Please note that sandbox instances are only suitable for deploying test clusters for use within the same host.
+
+This instance reports its own address as 127.0.0.1:3310
+
+Instance configuration is suitable.
+NOTE: Group Replication will communicate with other members using '127.0.0.1:3310'. Use the localAddress option to override.
+
+Creating InnoDB Cluster 'devCluster' on '127.0.0.1:3310'...
+
+Adding Seed Instance...
+Cluster successfully created. Use Cluster.addInstance() to add MySQL instances.
+At least 3 instances are needed for the cluster to be able to withstand up to
+one server failure.
+
+ MySQL  localhost:3310 ssl  JS > cluster.status()
+{
+    "clusterName": "devCluster",
+    "defaultReplicaSet": {
+        "name": "default",
+        "primary": "127.0.0.1:3310",
+        "ssl": "REQUIRED",
+        "status": "OK_NO_TOLERANCE",
+        "statusText": "Cluster is NOT tolerant to any failures.",
+        "topology": {
+            "127.0.0.1:3310": {
+                "address": "127.0.0.1:3310",
+                "memberRole": "PRIMARY",
+                "mode": "R/W",
+                "readReplicas": {},
+                "replicationLag": "applier_queue_applied",
+                "role": "HA",
+                "status": "ONLINE",
+                "version": "8.0.30"
+            }
+        },
+        "topologyMode": "Single-Primary"
+    },
+    "groupInformationSourceMember": "127.0.0.1:3310"
+}
+ MySQL  localhost:3310 ssl  JS > cluster.addInstance('root@localhost:3330');
+
+NOTE: The target instance '127.0.0.1:3330' has not been pre-provisioned (GTID set is empty). The Shell is unable to decide whether incremental state recovery can correctly provision it.
+The safest and most convenient way to provision a new instance is through automatic clone provisioning, which will completely overwrite the state of '127.0.0.1:3330' with a physical snapshot from an existing cluster member. To use this method by default, set the 'recoveryMethod' option to 'clone'.
+
+The incremental state recovery may be safely used if you are sure all updates ever executed in the cluster were done with GTIDs enabled, there are no purged transactions and the new instance contains the same GTID set as the cluster or a subset of it. To use this method by default, set the 'recoveryMethod' option to 'incremental'.
+
+
+Please select a recovery method [C]lone/[I]ncremental recovery/[A]bort (default Clone): c
+Validating instance configuration at localhost:3330...
+NOTE: Instance detected as a sandbox.
+Please note that sandbox instances are only suitable for deploying test clusters for use within the same host.
+
+This instance reports its own address as 127.0.0.1:3330
+
+Instance configuration is suitable.
+NOTE: Group Replication will communicate with other members using '127.0.0.1:3330'. Use the localAddress option to override.
+
+A new instance will be added to the InnoDB cluster. Depending on the amount of
+data on the cluster this might take from a few seconds to several hours.
+
+Adding instance to the cluster...
+
+Monitoring recovery process of the new cluster member. Press ^C to stop monitoring and let it continue in background.
+Clone based state recovery is now in progress.
+
+NOTE: A server restart is expected to happen as part of the clone process. If the
+server does not support the RESTART command or does not come back after a
+while, you may need to manually start it back.
+
+* Waiting for clone to finish...
+NOTE: 127.0.0.1:3330 is being cloned from 127.0.0.1:3310
+** Stage DROP DATA: Completed
+** Clone Transfer
+    FILE COPY  ############################################################  100%  Completed
+    PAGE COPY  ############################################################  100%  Completed
+    REDO COPY  ############################################################  100%  Completed
+
+NOTE: 127.0.0.1:3330 is shutting down...
+
+* Waiting for server restart... ready
+* 127.0.0.1:3330 has restarted, waiting for clone to finish...
+** Stage RESTART: Completed
+* Clone process has finished: 72.61 MB transferred in about 1 second (~72.61 MB/s)
+
+State recovery already finished for '127.0.0.1:3330'
+
+The instance '127.0.0.1:3330' was successfully added to the cluster.
+
+ MySQL  localhost:3310 ssl  JS > cluster.status()
+{
+    "clusterName": "devCluster",
+    "defaultReplicaSet": {
+        "name": "default",
+        "primary": "127.0.0.1:3310",
+        "ssl": "REQUIRED",
+        "status": "OK_NO_TOLERANCE",
+        "statusText": "Cluster is NOT tolerant to any failures.",
+        "topology": {
+            "127.0.0.1:3310": {
+                "address": "127.0.0.1:3310",
+                "memberRole": "PRIMARY",
+                "mode": "R/W",
+                "readReplicas": {},
+                "replicationLag": "applier_queue_applied",
+                "role": "HA",
+                "status": "ONLINE",
+                "version": "8.0.30"
+            },
+            "127.0.0.1:3330": {
+                "address": "127.0.0.1:3330",
+                "memberRole": "SECONDARY",
+                "mode": "R/O",
+                "readReplicas": {},
+                "replicationLag": "applier_queue_applied",
+                "role": "HA",
+                "status": "ONLINE",
+                "version": "8.0.30"
+            }
+        },
+        "topologyMode": "Single-Primary"
+    },
+    "groupInformationSourceMember": "127.0.0.1:3310"
+}
+ MySQL  localhost:3310 ssl  JS > cluster.addInstance('root@localhost:3320');
+
+NOTE: The target instance '127.0.0.1:3320' has not been pre-provisioned (GTID set is empty). The Shell is unable to decide whether incremental state recovery can correctly provision it.
+The safest and most convenient way to provision a new instance is through automatic clone provisioning, which will completely overwrite the state of '127.0.0.1:3320' with a physical snapshot from an existing cluster member. To use this method by default, set the 'recoveryMethod' option to 'clone'.
+
+The incremental state recovery may be safely used if you are sure all updates ever executed in the cluster were done with GTIDs enabled, there are no purged transactions and the new instance contains the same GTID set as the cluster or a subset of it. To use this method by default, set the 'recoveryMethod' option to 'incremental'.
+
+
+Please select a recovery method [C]lone/[I]ncremental recovery/[A]bort (default Clone): c
+Validating instance configuration at localhost:3320...
+NOTE: Instance detected as a sandbox.
+Please note that sandbox instances are only suitable for deploying test clusters for use within the same host.
+
+This instance reports its own address as 127.0.0.1:3320
+
+Instance configuration is suitable.
+NOTE: Group Replication will communicate with other members using '127.0.0.1:3320'. Use the localAddress option to override.
+
+A new instance will be added to the InnoDB cluster. Depending on the amount of
+data on the cluster this might take from a few seconds to several hours.
+
+Adding instance to the cluster...
+
+Monitoring recovery process of the new cluster member. Press ^C to stop monitoring and let it continue in background.
+Clone based state recovery is now in progress.
+
+NOTE: A server restart is expected to happen as part of the clone process. If the
+server does not support the RESTART command or does not come back after a
+while, you may need to manually start it back.
+
+* Waiting for clone to finish...
+NOTE: 127.0.0.1:3320 is being cloned from 127.0.0.1:3310
+** Stage DROP DATA: Completed
+** Clone Transfer
+    FILE COPY  ############################################################  100%  Completed
+    PAGE COPY  ############################################################  100%  Completed
+    REDO COPY  ############################################################  100%  Completed
+
+NOTE: 127.0.0.1:3320 is shutting down...
+
+* Waiting for server restart... ready
+* 127.0.0.1:3320 has restarted, waiting for clone to finish...
+** Stage RESTART: Completed
+* Clone process has finished: 72.61 MB transferred in about 1 second (~72.61 MB/s)
+
+Incremental state recovery is now in progress.
+
+* Waiting for distributed recovery to finish...
+NOTE: '127.0.0.1:3320' is being recovered from '<NULL>:0'
+* Distributed recovery has finished
+
+The instance '127.0.0.1:3320' was successfully added to the cluster.
+
+ MySQL  localhost:3310 ssl  JS > cluster.status();
+{
+    "clusterName": "devCluster",
+    "defaultReplicaSet": {
+        "name": "default",
+        "primary": "127.0.0.1:3310",
+        "ssl": "REQUIRED",
+        "status": "OK",
+        "statusText": "Cluster is ONLINE and can tolerate up to ONE failure.",
+        "topology": {
+            "127.0.0.1:3310": {
+                "address": "127.0.0.1:3310",
+                "memberRole": "PRIMARY",
+                "mode": "R/W",
+                "readReplicas": {},
+                "replicationLag": "applier_queue_applied",
+                "role": "HA",
+                "status": "ONLINE",
+                "version": "8.0.30"
+            },
+            "127.0.0.1:3320": {
+                "address": "127.0.0.1:3320",
+                "memberRole": "SECONDARY",
+                "mode": "R/O",
+                "readReplicas": {},
+                "replicationLag": "applier_queue_applied",
+                "role": "HA",
+                "status": "ONLINE",
+                "version": "8.0.30"
+            },
+            "127.0.0.1:3330": {
+                "address": "127.0.0.1:3330",
+                "memberRole": "SECONDARY",
+                "mode": "R/O",
+                "readReplicas": {},
+                "replicationLag": "applier_queue_applied",
+                "role": "HA",
+                "status": "ONLINE",
+                "version": "8.0.30"
+            }
+        },
+        "topologyMode": "Single-Primary"
+    },
+    "groupInformationSourceMember": "127.0.0.1:3310"
+}
+ MySQL  localhost:3310 ssl  JS > create database Quiz;
+SyntaxError: Unexpected identifier
+ MySQL  localhost:3310 ssl  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  localhost:3310 ssl  SQL > create database Quiz;
+Query OK, 1 row affected (0.0062 sec)
+ MySQL  localhost:3310 ssl  SQL > show databases;
++-------------------------------+
+| Database                      |
++-------------------------------+
+| information_schema            |
+| mysql                         |
+| mysql_innodb_cluster_metadata |
+| performance_schema            |
+| quiz                          |
+| sys                           |
++-------------------------------+
+6 rows in set (0.0023 sec)
+ MySQL  localhost:3310 ssl  SQL > use quiz;
+Default schema set to `quiz`.
+Fetching table and column names from `quiz` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3310 ssl  quiz  SQL > show tables;
+Empty set (0.0033 sec)
+ MySQL  localhost:3310 ssl  quiz  SQL > create table user(id int primary key auto_increment not null, name varchar(50), email varchar(100));
+Query OK, 0 rows affected (0.0311 sec)
+ MySQL  localhost:3310 ssl  quiz  SQL > show tables;
++----------------+
+| Tables_in_quiz |
++----------------+
+| user           |
++----------------+
+1 row in set (0.0037 sec)
+ MySQL  localhost:3310 ssl  quiz  SQL > insert into user(1, 'Sudesh', 'sudesh@gmail.com');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1, 'Sudesh', 'sudesh@gmail.com')' at line 1
+ MySQL  localhost:3310 ssl  quiz  SQL > insert into user values(1, 'Sudesh', 'sudesh@gmail.com');
+Query OK, 1 row affected (0.0119 sec)
+ MySQL  localhost:3310 ssl  quiz  SQL > insert into user values(2, 'Mahesh', 'mahesh@gmail.com'):
+                                     -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 1
+ MySQL  localhost:3310 ssl  quiz  SQL > insert into user values(2, 'Mahesh', 'mahesh@gmail.com');
+Query OK, 1 row affected (0.0105 sec)
+ MySQL  localhost:3310 ssl  quiz  SQL > select * from user;
++----+--------+------------------+
+| id | name   | email            |
++----+--------+------------------+
+|  1 | Sudesh | sudesh@gmail.com |
+|  2 | Mahesh | mahesh@gmail.com |
++----+--------+------------------+
+2 rows in set (0.0010 sec)
+
+ MySQL  localhost:3320 ssl  quiz  SQL > set global read_only=off
+                                     -> ;
+Query OK, 0 rows affected (0.0007 sec)
+ MySQL  localhost:3320 ssl  quiz  SQL >
